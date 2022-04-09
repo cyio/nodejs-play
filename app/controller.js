@@ -1,8 +1,9 @@
+const fs = require('fs')
 const http = require('http')
 
-let ctrl = {}
+const control = {}
 
-ctrl.getRequest = (req, res) => {
+control.getRequest = (req, res) => {
   const { url, method, headers, body } = req
   res.setHeader('Content-Type', 'application/json')
   res.writeHeader(200, 'Good')
@@ -15,7 +16,7 @@ ctrl.getRequest = (req, res) => {
   res.end()
 }
 
-ctrl.getPart = (req, res) => {
+control.getPart = (req, res) => {
   const { url, method, headers, body } = req
   res.setHeader('Content-Type', 'application/json')
   switch(req.pathParam.part) {
@@ -37,9 +38,18 @@ ctrl.getPart = (req, res) => {
   res.end()
 }
 
-ctrl.notFound = (req, res) => {
+control.notFound = (req, res) => {
   res.writeHeader(404, 'not found')
   res.end()
 }
 
-module.exports = ctrl
+control.getApp = (req, res) => {
+  const { url, method, headers, body } = req
+  res.setHeader('Content-Type', 'text/javascript')
+  fs.readFile('./app/app.js', (err, buf) => {
+    if (err) throw err
+    res.end(buf)
+  })
+}
+
+module.exports = control

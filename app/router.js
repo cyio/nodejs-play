@@ -1,9 +1,10 @@
-const { notFound, getRequest, getPart } = require('./controller')
+const { notFound, getRequest, getPart, getApp } = require('./controller')
 
 const RULE_LIST = {
+  '/app.js': getApp,
   '/:part': getPart,
   '/': getRequest,
-  '*': notFound
+  '*': notFound,
 }
 
 // 根据路由规则生成正则表达式
